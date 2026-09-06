@@ -2,6 +2,7 @@ from pathlib import Path
 
 from fastapi import FastAPI, File, HTTPException, UploadFile
 from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
 
 from .jobs import JobManager
 from .models import CreateJobRequest, JobResponse
@@ -101,3 +102,8 @@ def download_file(file_id: str):
         media_type="application/pdf",
         filename=f"{file_id}.pdf",
     )
+
+
+FRONTEND_DIR = Path(__file__).resolve().parent.parent / "frontend"
+
+app.mount("/", StaticFiles(directory=FRONTEND_DIR, html=True), name="frontend")
