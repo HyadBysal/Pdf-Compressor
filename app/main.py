@@ -104,6 +104,6 @@ def download_file(file_id: str):
     )
 
 
-FRONTEND_DIR = Path(__file__).resolve().parent.parent / "frontend"
+FRONTEND_DIR = Path(__file__).resolve().parent.parent / "frontend" / "dist"
 
 app.mount("/", StaticFiles(directory=FRONTEND_DIR, html=True), name="frontend")
