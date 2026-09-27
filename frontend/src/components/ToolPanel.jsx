@@ -4,16 +4,18 @@ import uploadArrow from "../assets/icons/upload-arrow.svg";
 import chevronDown from "../assets/icons/chevron-down.svg";
 import { TOOLS } from "../data/content.js";
 
+const API_BASE = import.meta.env.VITE_API_URL || "";
+
 async function uploadFile(file) {
   const formData = new FormData();
   formData.append("file", file);
-  const res = await fetch("/v1/files", { method: "POST", body: formData });
+  const res = await fetch(`${API_BASE}/v1/files`, { method: "POST", body: formData });
   if (!res.ok) throw new Error((await res.json().catch(() => null))?.detail || "Upload failed");
   return (await res.json()).file_id;
 }
 
 async function createJob(operation, fileIds) {
-  const res = await fetch("/v1/jobs", {
+  const res = await fetch(`${API_BASE}/v1/jobs`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ operation, file_ids: fileIds, options: {} }),
@@ -24,7 +26,7 @@ async function createJob(operation, fileIds) {
 
 async function pollJob(jobId) {
   while (true) {
-    const res = await fetch(`/v1/jobs/${jobId}`);
+    const res = await fetch(`${API_BASE}/v1/jobs/${jobId}`);
     const job = await res.json();
     if (job.status === "COMPLETED" || job.status === "FAILED") return job;
     await new Promise((r) => setTimeout(r, 1000));
@@ -70,7 +72,7 @@ export default function ToolPanel({ activeTool, onSelectTool }) {
       const finished = await pollJob(job.job_id);
 
       if (finished.status === "COMPLETED") {
-        setStatus({ message: "Done!", downloadUrl: `/v1/files/${finished.output_file_id}/download` });
+        setStatus({ message: "Done!", downloadUrl: `${API_BASE}/v1/files/${finished.output_file_id}/download` });
       } else {
         setStatus({ message: finished.error || "Processing failed.", isError: true });
       }

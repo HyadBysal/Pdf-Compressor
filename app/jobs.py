@@ -93,6 +93,8 @@ class JobManager:
                     int(job.options.get("degrees", 90)),
                 )
 
+            self.storage.finalize_output(output_file_id, output_path)
+
             with self.lock:
                 job.status = JobStatus.completed
                 job.output_file_id = output_file_id

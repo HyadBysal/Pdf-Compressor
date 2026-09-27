@@ -1,12 +1,19 @@
 from pathlib import Path
 
 from fastapi import FastAPI, File, HTTPException, UploadFile
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 
+import os
+
+from dotenv import load_dotenv
+
+load_dotenv()
+
 from .jobs import JobManager
 from .models import CreateJobRequest, JobResponse
-from .storage import LocalStorage
+from .storage import LocalStorage, S3Storage
 
 
 MAX_FILE_SIZE = 50 * 1024 * 1024
@@ -17,7 +24,14 @@ app = FastAPI(
     description="Minimal asynchronous PDF-processing platform.",
 )
 
-storage = LocalStorage()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[os.environ.get("FRONTEND_ORIGIN", "*")],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+storage = S3Storage() if os.environ.get("S3_BUCKET") else LocalStorage()
 jobs = JobManager(storage)
 
 
@@ -106,4 +120,5 @@ def download_file(file_id: str):
 
 FRONTEND_DIR = Path(__file__).resolve().parent.parent / "frontend" / "dist"
 
-app.mount("/", StaticFiles(directory=FRONTEND_DIR, html=True), name="frontend")
+if FRONTEND_DIR.exists():
+    app.mount("/", StaticFiles(directory=FRONTEND_DIR, html=True), name="frontend")
