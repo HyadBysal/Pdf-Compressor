@@ -7,7 +7,7 @@ import Footer from "./components/Footer.jsx";
 import "./App.css";
 
 function App() {
-  const [theme, setTheme] = useState("dark");
+  const [theme, setTheme] = useState("light");
   const [activeTool, setActiveTool] = useState("compress");
 
   return (

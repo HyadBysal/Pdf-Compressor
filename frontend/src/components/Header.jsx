@@ -1,4 +1,3 @@
-import BrandMark from "./icons/BrandMark.jsx";
 import ThemeToggle from "./ThemeToggle.jsx";
 import { TOOLS } from "../data/content.js";
 
@@ -7,8 +6,12 @@ export default function Header({ activeTool, onSelectTool, theme, onThemeChange 
     <header className="site-header">
       <div className="site-header__inner">
         <a className="brand" href="#top">
-          <BrandMark size={24} />
-          <span className="brand__name">IntelligentDock</span>
+          <img
+            className="brand__logo"
+            src={theme === "dark" ? "/logo-dark.svg" : "/logo-light.svg"}
+            alt="ipdfplumber"
+            height={20}
+          />
         </a>
 
         <nav className="nav-tabs" aria-label="PDF tools">

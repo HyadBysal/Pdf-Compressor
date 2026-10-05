@@ -1,6 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import DocIcon from "./icons/DocIcon.jsx";
-import uploadArrow from "../assets/icons/upload-arrow.svg";
 import chevronDown from "../assets/icons/chevron-down.svg";
 import { TOOLS } from "../data/content.js";
 
@@ -117,10 +115,7 @@ export default function ToolPanel({ activeTool, onSelectTool }) {
       >
         <div className="tool-panel__content">
           <div className="tool-panel__doc">
-            <DocIcon />
-            <div className="tool-panel__doc-badge">
-              <img src={uploadArrow} alt="" style={{ width: 15.109, height: 18.615 }} />
-            </div>
+            <img src="/icons/upload.svg" alt="" width={80} height={108} />
           </div>
 
           <div className="tool-panel__actions">

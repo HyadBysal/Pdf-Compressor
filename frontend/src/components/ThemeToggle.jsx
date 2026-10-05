@@ -1,22 +1,18 @@
 export default function ThemeToggle({ theme, onChange }) {
+  const isDark = theme === "dark";
   return (
-    <div className="theme-toggle" role="group" aria-label="Theme">
-      <button
-        type="button"
-        className={theme === "dark" ? "theme-toggle__btn is-active" : "theme-toggle__btn"}
-        aria-pressed={theme === "dark"}
-        onClick={() => onChange("dark")}
-      >
-        Dark
-      </button>
-      <button
-        type="button"
-        className={theme === "light" ? "theme-toggle__btn is-active" : "theme-toggle__btn"}
-        aria-pressed={theme === "light"}
-        onClick={() => onChange("light")}
-      >
-        Light
-      </button>
-    </div>
+    <button
+      type="button"
+      className="theme-toggle"
+      aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
+      onClick={() => onChange(isDark ? "light" : "dark")}
+    >
+      <img
+        src={isDark ? "/icons/light-mode-switch.svg" : "/icons/dark-mode-switch.svg"}
+        alt=""
+        width={36}
+        height={36}
+      />
+    </button>
   );
 }

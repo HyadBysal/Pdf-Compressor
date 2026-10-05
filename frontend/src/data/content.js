@@ -30,17 +30,17 @@ export const FEATURES = [
 
 export const FAQS = [
   {
-    question: "What can iLovePDF do that MyPdf cannot?",
+    question: "What can ipdfplumber do?",
     answer:
-      "Format conversion (PDF to Word, Excel, JPG and back), compression, and OCR. Nanodoc focuses on editing: combining, page management, annotation, redaction, signing, and stitching pages onto one sheet.",
+      "Compression, merging, and page rotation today, with more PDF tools on the way. Upload a PDF, pick a tool, and download the result in seconds.",
   },
   {
     question: "Are my files uploaded to a server?",
     answer:
-      "Not with Nanodoc. All processing happens locally in your browser or in the free desktop app, so your documents never leave your device. Most online PDF tools upload your file to servers to process it.",
+      "Yes — files are uploaded to process them (compression, merging, etc.), then stored securely and removed afterward. We never share or sell your documents.",
   },
   {
-    question: "Is MyPDF really free, or is there a catch?",
+    question: "Is ipdfplumber really free, or is there a catch?",
     answer:
       "Really free. There is no premium tier, no trial clock, no daily task limit, no watermark, and no account. The project is supported by optional donations.",
   },
