@@ -7,7 +7,7 @@ from typing import Any
 from uuid import uuid4
 
 from .models import JobStatus, Operation
-from .processor import compress_pdf, merge_pdfs, rotate_pdf
+from .processor import compress_pdf, merge_pdfs, rotate_pdf, split_pdf
 from .storage import LocalStorage
 
 
@@ -81,10 +81,18 @@ class JobManager:
             output_file_id, output_path = self.storage.create_output_path()
 
             if job.operation == Operation.compress:
-                compress_pdf(input_paths[0], output_path)
+                compress_pdf(input_paths[0], output_path, str(job.options.get("level", "recommended")))
 
             elif job.operation == Operation.merge:
                 merge_pdfs(input_paths, output_path)
+
+            elif job.operation == Operation.split:
+                split_pdf(
+                    input_paths[0],
+                    output_path,
+                    str(job.options.get("mode", "pages")),
+                    str(job.options.get("ranges", "")),
+                )
 
             elif job.operation == Operation.rotate:
                 rotate_pdf(

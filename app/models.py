@@ -7,6 +7,7 @@ class Operation(str, Enum):
     compress = "compress"
     merge = "merge"
     rotate = "rotate"
+    split = "split"
 
 
 class JobStatus(str, Enum):

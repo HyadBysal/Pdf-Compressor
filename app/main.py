@@ -111,14 +111,25 @@ def download_file(file_id: str):
     except FileNotFoundError:
         raise HTTPException(status_code=404, detail="Output file not found")
 
+    # Split jobs with several parts produce a ZIP archive of PDFs.
+    with open(path, "rb") as f:
+        is_zip = f.read(2) == b"PK"
+
     return FileResponse(
         path=str(path),
-        media_type="application/pdf",
-        filename=f"{file_id}.pdf",
+        media_type="application/zip" if is_zip else "application/pdf",
+        filename=f"{file_id}.zip" if is_zip else f"{file_id}.pdf",
     )
 
 
 FRONTEND_DIR = Path(__file__).resolve().parent.parent / "frontend" / "dist"
 
 if FRONTEND_DIR.exists():
+
+    @app.get("/compress", include_in_schema=False)
+    @app.get("/merge", include_in_schema=False)
+    @app.get("/split", include_in_schema=False)
+    def tool_page():
+        return FileResponse(FRONTEND_DIR / "index.html")
+
     app.mount("/", StaticFiles(directory=FRONTEND_DIR, html=True), name="frontend")

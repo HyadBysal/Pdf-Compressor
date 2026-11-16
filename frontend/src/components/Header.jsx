@@ -1,16 +1,24 @@
-import ThemeToggle from "./ThemeToggle.jsx";
 import { TOOLS } from "../data/content.js";
+import { navigate } from "../lib/router.js";
 
-export default function Header({ activeTool, onSelectTool, theme, onThemeChange }) {
+export default function Header({ activeTool, onSelectTool }) {
   return (
     <header className="site-header">
       <div className="site-header__inner">
-        <a className="brand" href="#top">
+        <a
+          className="brand"
+          href="/"
+          onClick={(e) => {
+            e.preventDefault();
+            navigate("/");
+          }}
+        >
           <img
             className="brand__logo"
-            src={theme === "dark" ? "/logo-dark.svg" : "/logo-light.svg"}
+            src="/logo-light.svg"
             alt="ipdfplumber"
-            height={20}
+            width={166}
+            height={25}
           />
         </a>
 
@@ -28,8 +36,6 @@ export default function Header({ activeTool, onSelectTool, theme, onThemeChange 
             </button>
           ))}
         </nav>
-
-        <ThemeToggle theme={theme} onChange={onThemeChange} />
       </div>
     </header>
   );

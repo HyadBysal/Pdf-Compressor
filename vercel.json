@@ -1,5 +1,19 @@
 {
   "installCommand": "cd frontend && npm install",
   "buildCommand": "cd frontend && npm run build",
-  "outputDirectory": "frontend/dist"
+  "outputDirectory": "frontend/dist",
+  "rewrites": [
+    {
+      "source": "/compress",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/merge",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/split",
+      "destination": "/index.html"
+    }
+  ]
 }
